@@ -1,6 +1,6 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Testing Commit Function" << std::endl;
+    std::cout << "The Eating of Beans will Not Be Tolerated In This Repo" << std::endl;
     return 0;
 }
