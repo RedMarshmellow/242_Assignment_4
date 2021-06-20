@@ -4,6 +4,7 @@ I read and accept the submission rules and the important section specified in as
 This is my own work that is done by myself and my team-mate only */
 
 #include <iostream>
+#include "grid.h"
 
 int main() {
     std::cout << "The Eating of Beans will Not Be Tolerated In This Repo" << std::endl;
