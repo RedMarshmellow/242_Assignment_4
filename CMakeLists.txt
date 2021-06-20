@@ -3,4 +3,4 @@ project(242_Assignment_4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(242_Assignment_4 main.cpp "Testing New Files.h" grid.cpp grid.h cmake-build-debug/entity.cpp cmake-build-debug/entity.h)
+add_executable(242_Assignment_4 main.cpp "Testing New Files.h" grid.cpp grid.h entity.cpp entity.h)
