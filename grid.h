@@ -1,5 +1,7 @@
 #ifndef INC_242_ASSIGNMENT_4_GRID_H
 #define INC_242_ASSIGNMENT_4_GRID_H
+
+#include <ostream>
 #include "entity.h"
 
 class grid {
@@ -11,8 +13,15 @@ public:
 
     int getSize() const;
     entity ***getBoard() const;
+    entity* getEntity(int x, int y) const;
 
+    bool checkFree(int sourceX, int sourceY, int direction, int entitySize);
+    void placeEntity(int sourceX, int sourceY, int direction, entity *entityPlaced);
+
+    friend std::ostream &operator<<(std::ostream &os, const grid &grid);
     virtual ~grid();
+
+    void deploy();
 };
 
 

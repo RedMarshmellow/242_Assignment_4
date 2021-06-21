@@ -5,8 +5,10 @@ This is my own work that is done by myself and my team-mate only */
 
 #include <iostream>
 #include "grid.h"
-
+#include "testpack.h"
 int main() {
+    srand(time(NULL));
+    return adamTest();
     std::cout << "The Eating of Beans will Not Be Tolerated In This Repo" << std::endl;
     return 0;
 }

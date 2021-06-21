@@ -1,43 +1,48 @@
-#include "zombies.h"
+#include "zombie.h"
 
-type zombies::getZombieclass() const {
+type zombie::getZombieclass() const {
     return zombieclass;
 }
 
-int zombies::getHp() const {
+int zombie::getHp() const {
     return HP;
 }
 
-int zombies::getDmg() const {
+int zombie::getDmg() const {
     return DMG;
 }
 
-void zombies::updateHP(int dmg) {
+void zombie::updateHP(int dmg) {
     this->HP -= dmg;
     if(this->HP <= 0)
         this->KO = true;
 }
 
-bool zombies::isKO() const {
+bool zombie::isKO() const {
     return KO;
 }
 
-zombies::zombies(int size, char representingChar) : entity(size, representingChar) {
-
-    switch (representingChar) {
-        case 'S':
+zombie::zombie(int size) : entity(size) {
+    if(size==1)
+        setRepresentingChar('S');
+    else if (size==2)
+        entity::setRepresentingChar('M');
+    else if (size==3)
+        entity::setRepresentingChar('L');
+    switch (size) {
+        case 1:
             zombieclass = S;
             HP = 4;
             DMG = 2;
             KO = false;
             break;
-        case 'M':
+        case 2:
             zombieclass = M;
             HP = 8;
             DMG = 4;
             KO = false;
             break;
-        case 'L':
+        case 3:
             zombieclass = L;
             HP = 12;
             DMG = 8;

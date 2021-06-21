@@ -1,18 +1,18 @@
-#ifndef INC_242_ASSIGNMENT_4_ZOMBIES_H
-#define INC_242_ASSIGNMENT_4_ZOMBIES_H
+#ifndef INC_242_ASSIGNMENT_4_ZOMBIE_H
+#define INC_242_ASSIGNMENT_4_ZOMBIE_H
 
 #include "entity.h"
 
 enum type{S,M,L};
 
-class zombies : public entity{
+class zombie : public entity{
 private:
     type    zombieclass;
     int     HP;
     int     DMG;
     bool    KO;
 public:
-    zombies(int size, char representingChar);
+    zombie(int size);
 
     type getZombieclass() const;
 
