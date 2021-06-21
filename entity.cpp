@@ -21,3 +21,5 @@ std::ostream &operator<<(std::ostream &os, const entity &entity) {
     os << entity.representingChar;
     return os;
 }
+
+resource::resource(int size, char representingChar) : entity(size, representingChar) {}

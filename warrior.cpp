@@ -45,6 +45,33 @@ void warrior::addKill(entity *zombieKilled){
     delete zombieKilled;
 }
 
+void warrior::consumeAmmo(int ammo) {
+    warrior::ammo -= ammo;
+}
+
+void warrior::takeDamage(int hitPoints) {
+    warrior::hitPoints -= hitPoints;
+}
+
+void warrior::heal(int hitPoints) {
+    warrior::hitPoints += hitPoints;
+}
+
+void warrior::addAmmo(int amount) {
+    ammo+=amount;
+}
+
+bool warrior::have2Kills() {
+    //checking if 2 zombies are killed
+    //if <=1 zombies are killed, then killList has no commas
+    //if >=2 zombies are killed, killList has at least 1 comma
+    if (killList.find(',')==std::string::npos){
+        //if no commas found
+        return true;
+    }
+    return false;
+}
+
 derick::derick() : warrior('D', 30, DERICK) {}
 
 int derick::shootBullets() {
@@ -52,12 +79,11 @@ int derick::shootBullets() {
     //returns 2 if 2 bullets fired
     //returns 1 if 1 bullet fired
     //returns 0 if out of ammo
-
-    if (ammo > 1) {
-        ammo -= 2;
+    if (getAmmo() > 1) {
+        consumeAmmo(2);
         return 2;
-    } else if (ammo==1){
-        ammo -=1;
+    } else if (getAmmo() == 1){
+        consumeAmmo(1);
         return 1;
     } else
         return 0;
@@ -88,8 +114,8 @@ int chichonne::shootBullet() {
     //function to attempt to shoot, and keep track of ammo
     //returns 1 if shooting successful
     //returns 0 if out of bullets
-    if (ammo>0) {
-        ammo--;
+    if (getAmmo()>0) {
+        consumeAmmo(1);
         return 1;
     } else
         return 0;
@@ -106,21 +132,13 @@ void chichonne::addKill(entity *zombieKilled) {
     int scores[3] = {50,75,100};
     addScore(scores[size]);
 
-    //checking if 2 zombies are killed
-    //if this is the second zombie to be killed, killList string will not contain a comma
-    if (killList.find(',')==std::string::npos){
-        //if no commas found, upgrade katana
+    if (have2Kills())
         megaKatana= true;
-    }
 
     std::string labels[3] = {"Small Zombie","Medium Zombie","Large Zombie"};
     if (!killList.empty())
         killList+=",";
-
     killList+=labels[size];
-
-
-
 
     delete zombieKilled;
 }

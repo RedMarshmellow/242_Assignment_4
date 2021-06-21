@@ -19,17 +19,22 @@ public:
     char getRepresentingChar() const;
 
     int getSize() const;
-
-
-};
-class ammunition : public entity {
-public:
-    ammunition() : entity(1, 'A') {}
 };
 
-class medkit: public entity{
+
+class resource: public entity{
 public:
-    medkit(int size) : entity(size, (size==1)?'+':'*') {}
+    resource(int size, char representingChar);
+};
+
+class ammunition : public resource {
+public:
+    ammunition() : resource(1, 'A') {}
+};
+
+class medkit: public resource{
+public:
+    medkit(int size) : resource(size, (size==1)?'+':'*') {}
 };
 
 #endif //INC_242_ASSIGNMENT_4_ENTITY_H
