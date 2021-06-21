@@ -2,6 +2,7 @@
 #define INC_242_ASSIGNMENT_4_GRID_H
 
 #include <ostream>
+#include <vector>
 #include "entity.h"
 
 class grid {
@@ -21,7 +22,9 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const grid &grid);
     virtual ~grid();
 
-    void deploy();
+    void deploy(std::vector<entity *> entitiesToBeAdded);
+
+    std::vector<entity *> createEntities() const;
 };
 
 
