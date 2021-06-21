@@ -4,6 +4,7 @@
 #include <ostream>
 #include <vector>
 #include "entity.h"
+#include "resource.h"
 
 class grid {
 private:

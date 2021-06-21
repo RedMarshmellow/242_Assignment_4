@@ -65,8 +65,8 @@ bool warrior::have2Kills() {
     //checking if 2 zombies are killed
     //if <=1 zombies are killed, then killList has no commas
     //if >=2 zombies are killed, killList has at least 1 comma
-    if (killList.find(',')==std::string::npos){
-        //if no commas found
+    if (killList.find(',')!=std::string::npos){
+        //if at least 1 comma found
         return true;
     }
     return false;
@@ -123,22 +123,10 @@ int chichonne::shootBullet() {
 
 void chichonne::addKill(entity *zombieKilled) {
     //overriding to account for keeping track of katana level
-
-    //function to automatically update score and killList from zombie entity
-    //also will keep track of katana Leveling
-    //note: as of writing, the function will also delete zombie object, may change later
-
-    int size = zombieKilled->getSize() - 1;
-    int scores[3] = {50,75,100};
-    addScore(scores[size]);
-
-    if (have2Kills())
-        megaKatana= true;
-
-    std::string labels[3] = {"Small Zombie","Medium Zombie","Large Zombie"};
-    if (!killList.empty())
-        killList+=",";
-    killList+=labels[size];
-
-    delete zombieKilled;
+    warrior::addKill(zombieKilled);
+    if (!megaKatana){
+        if (have2Kills()) {
+            megaKatana= true;
+        }
+    }
 }

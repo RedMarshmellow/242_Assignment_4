@@ -10,12 +10,11 @@ resource::resource(int size, char representingChar, int replenish, resource::Typ
                                                                                            replenish(replenish),
                                                                                            type(type) {}
 
-medkit::medkit(int size, char representingChar, int replenish, resource::Types type) : resource(
-        size, representingChar, replenish, type) { size = (this->getRepresentingChar() == '+') ? S : L; }
+medkit::medkit(int size) : resource(
+        size, (size==1)?'+':'*', (size==1)?10:20, Health) {}
 
 medkit::Sizes medkit::returnsize() {
     return this->size;
 }
 
-ammo::ammo(int size, char representingChar, int replenish, resource::Types type) : resource(size, representingChar,
-                                                                                            replenish, type) {}
+ammunition::ammunition(): resource(1,'A',10,Ammo) {}
