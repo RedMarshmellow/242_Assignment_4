@@ -10,7 +10,7 @@ private:
     int size;
     char representingChar;
 protected:
-    void setRepresentingChar(char representingChar); //only want subclasses to acces this
+    void setRepresentingChar(char representingChar); //only want subclasses to access this
 public:
     friend std::ostream &operator<<(std::ostream &os, const entity &entity);
     entity(int size, char representingChar);
@@ -22,19 +22,15 @@ public:
 };
 
 
-class resource: public entity{
-public:
-    resource(int size, char representingChar);
 };
-
-class ammunition : public resource {
-public:
-    ammunition() : resource(1, 'A') {}
-};
-
-class medkit: public resource{
-public:
-    medkit(int size) : resource(size, (size==1)?'+':'*') {}
-};
+//class ammunition : public entity {
+//public:
+//    ammunition() : entity(1, 'A') {}
+//};
+//
+//class medkit: public entity{
+//public:
+//    medkit(int size) : entity(size, (size==1)?'+':'*') {}
+//};
 
 #endif //INC_242_ASSIGNMENT_4_ENTITY_H
