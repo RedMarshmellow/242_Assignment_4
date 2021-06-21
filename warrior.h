@@ -2,6 +2,7 @@
 #define INC_242_ASSIGNMENT_4_WARRIOR_H
 #include <vector> //used to store kill list
 #include <string>
+#include <ostream>
 #include "zombie.h"
 
 //warrior classes here
@@ -42,6 +43,8 @@ class derick:public warrior {
 public:
     int shootBullets(); //derick will always to attempt to shoot 2 bullets if he can
     derick();
+
+    friend std::ostream &operator<<(std::ostream &os, const derick &derick);
 };
 
 class chichonne: public warrior{
@@ -51,14 +54,14 @@ public:
 
 private:
     bool megaKatana; // bool is false when katana is unleveled, true when katana is level to megaKatana
-    int katanaKills=0; // to check for katana upgrade
 public:
     int shootBullet();
 
+    friend std::ostream &operator<<(std::ostream &os, const chichonne &chichonne);
+
     void addKill(entity *zombieKilled) override;
 
-    int swipeKatana() const;
-    bool confirmKatanaKill();
+    int useKatana() const;
 };
 
 #endif //INC_242_ASSIGNMENT_4_WARRIOR_H

@@ -21,14 +21,4 @@ public:
     int getSize() const;
 };
 
-//class ammunition : public entity {
-//public:
-//    ammunition() : entity(1, 'A') {}
-//};
-//
-//class medkit: public entity{
-//public:
-//    medkit(int size) : entity(size, (size==1)?'+':'*') {}
-//};
-
 #endif //INC_242_ASSIGNMENT_4_ENTITY_H

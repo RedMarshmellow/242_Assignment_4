@@ -3,11 +3,12 @@
 #define INC_242_ASSIGNMENT_4_TESTPACK_H
 
 #include "grid.h"
+#include "warrior.h"
+
 
 int adamTest(){
-    printLegend();
-    grid board(5);
-    std::cout<<board;
+    derick test;
+    std::cout<<test;
     return 0;
 };
 

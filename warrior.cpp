@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "warrior.h"
 
 warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType),entity(1, representingChar), hitPoints(100), ammo(ammo), score(0), alive(true) {}
@@ -42,6 +43,8 @@ void warrior::addKill(entity *zombieKilled){
 
     killList+=labels[size];
 
+    std::cout << labels[size] <<" Slain!\n";
+
     delete zombieKilled;
 }
 
@@ -51,6 +54,8 @@ void warrior::consumeAmmo(int ammo) {
 
 void warrior::takeDamage(int hitPoints) {
     warrior::hitPoints -= hitPoints;
+    if (hitPoints<=0)
+        alive= false;
 }
 
 void warrior::heal(int hitPoints) {
@@ -89,25 +94,23 @@ int derick::shootBullets() {
         return 0;
 }
 
+std::ostream &operator<<(std::ostream &os, const derick &derick) {
+    os << "==============================\n"
+          "Derick \"Deadeye\" Dreams\n"
+          "Green skin is so last season.\n"
+          "=============================\n";
+    os<< "HP:\t\t"<<derick.getHitPoints()<<"\n";
+    os<< "Ammo:\t"<<derick.getAmmo()<<"\n";
+    return os;
+}
+
 chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false), katanaKills(0){}
 
-int chichonne::swipeKatana() const {
+int chichonne::useKatana() const {
     if (!megaKatana)
         return 4;
     else
         return 6;
-}
-
-bool chichonne::confirmKatanaKill() {
-    //keeps track of kills and levels katana
-    //returns true if katana levels, false otherwise;
-
-    katanaKills++;
-    if (katanaKills>1) {
-        megaKatana = true;
-        return true;
-    }
-    return false;
 }
 
 int chichonne::shootBullet() {
@@ -127,6 +130,18 @@ void chichonne::addKill(entity *zombieKilled) {
     if (!megaKatana){
         if (have2Kills()) {
             megaKatana= true;
+            std::cout<<"Chichonne's katana has leveled to a Mega Katana!\n";
         }
     }
+}
+
+std::ostream &operator<<(std::ostream &os, const chichonne &chichonne) {
+    os << "===============================\n"
+          "Chichonne \"Crimsonblade\" Mohawk\n"
+          "Steel for breakfast,sir?.\n"
+          "===============================\n";
+    os<< "HP:\t\t"<<chichonne.getHitPoints()<<"\n";
+    os<< "Ammo:\t"<<chichonne.getAmmo()<<"\n";
+    os<<"Blade level: "<< ((!chichonne.megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
+    return os;
 }
