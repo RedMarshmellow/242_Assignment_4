@@ -9,9 +9,9 @@ class grid {
 private:
     int size;
     entity*** board;
+    bool medkitsDiscovered, zombiesDiscovered, ammunitionDiscovered;
 public:
     grid(int size);
-
     int getSize() const;
     entity ***getBoard() const;
     entity* getEntity(int x, int y) const;
@@ -26,6 +26,8 @@ public:
 
     std::vector<entity *> createEntities() const;
 };
+
+void printLegend(); //declaration outside scope of class so it is reachable from other files.
 
 
 #endif //INC_242_ASSIGNMENT_4_GRID_H

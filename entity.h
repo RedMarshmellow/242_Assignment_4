@@ -9,15 +9,15 @@ class entity {
 private:
     int size;
     char representingChar;
+protected:
+    void setRepresentingChar(char representingChar); //only want subclasses to acces this
 public:
     friend std::ostream &operator<<(std::ostream &os, const entity &entity);
-
-public:
     entity(int size, char representingChar);
     entity(int size);
 
     char getRepresentingChar() const;
-    void setRepresentingChar(char representingChar);
+
     int getSize() const;
 
 

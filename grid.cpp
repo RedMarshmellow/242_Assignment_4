@@ -30,7 +30,7 @@ grid::~grid() {
     }
 }
 
-grid::grid(int size) : size(size) {
+grid::grid(int size) : size(size),zombiesDiscovered(false),medkitsDiscovered(false),ammunitionDiscovered(false) {
     board = new entity**[size];
     for (int i = 0; i < size; ++i) {
         board[i] = new entity*[size];
@@ -182,11 +182,36 @@ std::ostream &operator<<(std::ostream &os, const grid &grid) {
     for (int i = 0; i < grid.getSize(); ++i) {
         os<< i << "  |\t";
         for (int j = 0; j < grid.getSize(); ++j) {
-            if (board[i][j]!= nullptr)os<< *board[i][j];
-            else os<< "_";
+
+            bool visible; //invisible will represent both undiscovered and also empty tiles of the board
+            if (board[i][j] == nullptr) visible = false;
+            else {
+
+                char type = board[i][j]->getRepresentingChar();
+                if (type == '+' || type == '*')
+                    visible = grid.medkitsDiscovered;
+                else if (type == 'S' || type == 'M' || type == 'L')
+                    visible = grid.zombiesDiscovered;
+                else
+                    visible = grid.ammunitionDiscovered;
+            }
+
+            if (visible)os << *board[i][j];
+            else { os << "_"; }
             os<<"\t\t";
         }
         os<<"\n";
     }
     return os;
+}
+
+void printLegend() {
+    //this was going to be in a separate .txt file but that introduced unnecessary issues
+    std::cout<<"========================================\n"
+               "Legend:\n"
+               "[A] Ammunition      [L] Large Zombie\n"
+               "[+] Small Medkit    [M] Medium Zombie\n"
+               "[*] Large Medkit    [S] Small Zombie\n"
+               "[D] Derick Dreams   [C] Chichonne Mohawk\n"
+               "========================================\n";
 }
