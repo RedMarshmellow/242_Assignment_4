@@ -22,13 +22,13 @@ class medkit : public resource{
 private:
     enum Sizes{S,L} size;
 public:
-    medkit(int size, char representingChar, int replenish, Types type);
+    medkit(int size);
     Sizes returnsize();
 };
 
-class ammo : public resource{
+class ammunition : public resource{
 public:
-    ammo(int size, char representingChar, int replenish, Types type);
+    ammunition();
 };
 
 #endif //INC_242_ASSIGNMENT_4_RESOURCE_H

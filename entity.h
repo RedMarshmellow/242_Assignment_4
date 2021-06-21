@@ -19,9 +19,8 @@ public:
     char getRepresentingChar() const;
 
     int getSize() const;
-
-
 };
+
 //class ammunition : public entity {
 //public:
 //    ammunition() : entity(1, 'A') {}

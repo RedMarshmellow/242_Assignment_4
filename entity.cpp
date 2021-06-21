@@ -1,5 +1,4 @@
 #include "entity.h"
-
 char entity::getRepresentingChar() const {
     return representingChar;
 }
