@@ -12,4 +12,9 @@ int adamTest(){
     return 0;
 };
 
+int ahmedTest(){
+    std::cout << "";
+    return 0;
+}
+
 #endif //INC_242_ASSIGNMENT_4_TESTPACK_H

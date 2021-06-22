@@ -79,7 +79,7 @@ bool warrior::have2Kills() {
 
 derick::derick() : warrior('D', 30, DERICK) {}
 
-int derick::shootBullets() {
+int derick::shoot() {
     //function to attempt to shoot bullets, returns number of bullets fired
     //returns 2 if 2 bullets fired
     //returns 1 if 1 bullet fired
@@ -104,16 +104,27 @@ std::ostream &operator<<(std::ostream &os, const derick &derick) {
     return os;
 }
 
-chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false), katanaKills(0){}
+void derick::printOptions() {
+    std::cout << "Available Actions: \n";
+    std::cout << "[S]hoot\n[K]nife\n";
+    std::cout << "How Do You Proceed?\n";
+}
 
-int chichonne::useKatana() const {
+int derick::melee() const {
+    return 1;
+}
+
+
+chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false){}
+
+int chichonne::melee() const {
     if (!megaKatana)
         return 4;
     else
         return 6;
 }
 
-int chichonne::shootBullet() {
+int chichonne::shoot() {
     //function to attempt to shoot, and keep track of ammo
     //returns 1 if shooting successful
     //returns 0 if out of bullets
@@ -144,4 +155,10 @@ std::ostream &operator<<(std::ostream &os, const chichonne &chichonne) {
     os<< "Ammo:\t"<<chichonne.getAmmo()<<"\n";
     os<<"Blade level: "<< ((!chichonne.megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
     return os;
+}
+
+void chichonne::printOptions() {
+    std::cout << "Available Actions: \n";
+    std::cout << "[S]hoot\n[K]atana\n";
+    std::cout << "How Do You Proceed?\n";
 }

@@ -2,6 +2,7 @@
 #define INC_242_ASSIGNMENT_4_ZOMBIE_H
 
 #include "entity.h"
+#include <iostream>
 
 enum type{S,M,L};
 
@@ -23,6 +24,8 @@ public:
     void updateHP(int);
 
     bool isKO() const;
+
+    void printInfo(int);
 };
 
 

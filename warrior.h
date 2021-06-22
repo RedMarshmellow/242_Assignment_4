@@ -22,6 +22,11 @@ protected:
 public:
     warrior(char representingChar, int ammo, enum warriorTypes warriorType);
 
+    virtual void printOptions() = 0;
+
+    virtual int shoot() = 0;
+
+    virtual int melee() const = 0;
 
     virtual void addKill(entity* zombieKilled);
     bool isAlive() const;
@@ -41,10 +46,12 @@ public:
 
 class derick:public warrior {
 public:
-    int shootBullets(); //derick will always to attempt to shoot 2 bullets if he can
+    int shoot() override; //derick will always to attempt to shoot 2 bullets if he can
+    int melee() const override;
     derick();
-
     friend std::ostream &operator<<(std::ostream &os, const derick &derick);
+
+    void printOptions() override;
 };
 
 class chichonne: public warrior{
@@ -55,13 +62,15 @@ public:
 private:
     bool megaKatana; // bool is false when katana is unleveled, true when katana is level to megaKatana
 public:
-    int shootBullet();
+    int shoot()override;
 
     friend std::ostream &operator<<(std::ostream &os, const chichonne &chichonne);
 
     void addKill(entity *zombieKilled) override;
 
-    int useKatana() const;
+    int melee() const override;
+
+    void printOptions() override;
 };
 
 #endif //INC_242_ASSIGNMENT_4_WARRIOR_H

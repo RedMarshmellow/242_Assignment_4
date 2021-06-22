@@ -52,3 +52,19 @@ zombie::zombie(int size) : entity(size) {
             throw "UNDEFINED ZOMBIE TYPE\n";
     }
 }
+
+void zombie::printInfo(int state) {
+    switch (state) {
+        case 1:
+            std::cout << "Zombie HP: " << this->getHp() << "===============================\n";
+            break;
+        case 2:
+            std::cout << "Zombie Attacks for " << this->getDmg() << " Damage!\n===============================\n";
+            break;
+        case 3:
+            std::cout << "Zombie Defeated!\n===============================\n";
+            break;
+        default:
+            break;
+    }
+}
