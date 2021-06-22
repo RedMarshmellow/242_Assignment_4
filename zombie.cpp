@@ -1,6 +1,6 @@
 #include "zombie.h"
 
-type zombie::getZombieclass() const {
+zombieTypes zombie::getZombieclass() const {
     return zombieclass;
 }
 
@@ -22,7 +22,7 @@ bool zombie::isKO() const {
     return KO;
 }
 
-zombie::zombie(int size) : entity(size) {
+zombie::zombie(int size) : entity(size,'_',Zombie) {
     if(size==1)
         setRepresentingChar('S');
     else if (size==2)

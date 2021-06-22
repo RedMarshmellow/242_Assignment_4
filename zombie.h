@@ -4,18 +4,18 @@
 #include "entity.h"
 #include <iostream>
 
-enum type{S,M,L};
+enum zombieTypes{S,M,L};
 
 class zombie : public entity{
 private:
-    type    zombieclass;
+    zombieTypes    zombieclass;
     int     HP;
     int     DMG;
     bool    KO;
 public:
     zombie(int size);
 
-    type getZombieclass() const;
+    zombieTypes getZombieclass() const;
 
     int getHp() const;
 

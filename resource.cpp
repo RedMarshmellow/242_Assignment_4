@@ -1,14 +1,19 @@
 #include "resource.h"
 
 
-int resource::Resupply() {
+int resource::resupply() {
     return replenish;
 }
 
-resource::resource(int size, char representingChar, int replenish, resource::Types type) : entity(size,
-                                                                                                  representingChar),
-                                                                                           replenish(replenish),
-                                                                                           type(type) {}
+resource::resource(int size, char representingChar, int replenish, resourceTypes type) : entity(size,
+                                                                                                representingChar,
+                                                                                                Resource),
+                                                                                         replenish(replenish),
+                                                                                         type(type) {}
+
+resourceTypes resource::getType() const {
+    return type;
+}
 
 medkit::medkit(int size) : resource(
         size, (size==1)?'+':'*', (size==1)?10:20, Health) {}

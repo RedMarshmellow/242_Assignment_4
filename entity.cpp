@@ -7,7 +7,7 @@ int entity::getSize() const {
     return size;
 }
 
-entity::entity(int size, char representingChar) : size(size), representingChar(representingChar) {}
+entity::entity(int size, char representingChar, entityTypes type) : size(size), representingChar(representingChar), type(type) {}
 
 // _ to be used as a sentinel representing char to be replaced
 entity::entity(int size) : size(size),representingChar('_') {}
@@ -19,4 +19,8 @@ void entity::setRepresentingChar(char representingChar) {
 std::ostream &operator<<(std::ostream &os, const entity &entity) {
     os << entity.representingChar;
     return os;
+}
+
+entityTypes entity::getType() const {
+    return type;
 }

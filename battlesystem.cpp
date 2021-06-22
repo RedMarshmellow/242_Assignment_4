@@ -19,7 +19,11 @@ int calcDMG(int base, int dice) {
 
 
 
-int Battle(warrior *Warrior, zombie *Zombie) {
+int battle(warrior *Warrior, zombie *Zombie) {
+    //function to perform the battle gameplay
+    //returns 0 if player wins
+    //returns 1 if zombie wins
+
     char selection;
     cout << "Zombie Encounter!\n";
     while (Warrior->isAlive() && !Zombie->isKO()) {
@@ -40,17 +44,18 @@ int Battle(warrior *Warrior, zombie *Zombie) {
         return 0;
     }
     if (!Warrior->isAlive()) {
-        (Warrior->getRepresentingChar() == 'C') ? cout << "Chichonne " : cout << "Derek ";
+        (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne " : cout << "Derek ";
         cout << "Has Been Defeated!\n";
         return 1;
     }
 }
+
 void playerAttack(char attack,warrior* Warrior,zombie* Zombie) {
     if (attack == 'K') {
-        (Warrior->getRepresentingChar() == 'C') ? cout << "Chichonne Strikes At The Zombie With Her Katana!\n" : cout << "Derek Desperately Slashes The Zombie With His Knife!\n";
+        (Warrior->getWarriorType()==CHICHONNE) ? cout << "Chichonne Strikes At The Zombie With Her Katana!\n" : cout << "Derek Desperately Slashes The Zombie With His Knife!\n";
         Zombie->updateHP(Warrior->melee());
     } else {
-        (Warrior->getRepresentingChar() == 'C') ? cout << "Chichonne Fires Her Pistol!\n" : cout << "Derek Fires His Revolver!\n";
+        (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Fires Her Pistol!\n" : cout << "Derek Fires His Revolver!\n";
         Zombie->updateHP(calcDMG(Warrior->shoot(),rollDice()));
     }
 }

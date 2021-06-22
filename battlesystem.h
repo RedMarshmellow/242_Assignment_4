@@ -4,7 +4,7 @@
 #include "warrior.h"
 #include "entity.h"
 
-int Battle(warrior* , zombie* );
+int battle(warrior* , zombie* );
 int rollDice();
 int calcDMG(int, int);
 void playerAttack(char,warrior*,zombie*);

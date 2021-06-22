@@ -1,19 +1,21 @@
 #ifndef INC_242_ASSIGNMENT_4_RESOURCE_H
 #define INC_242_ASSIGNMENT_4_RESOURCE_H
-
 #include "entity.h"
+
+enum resourceTypes{Ammo,Health};
 
 class resource : public entity {
 private:
     int replenish;
 protected:
-    enum Types{Ammo,Health} type;
+     resourceTypes type;
 public:
-    resource(int size, char representingChar, int replenish, Types type);
+    resource(int size, char representingChar, int replenish, resourceTypes type);
 
 public:
+    resourceTypes getType() const;
 
-    int Resupply();
+    int resupply();
 };
 
 

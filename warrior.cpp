@@ -2,7 +2,9 @@
 #include <iostream>
 #include "warrior.h"
 
-warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType),entity(1, representingChar), hitPoints(100), ammo(ammo), score(0), alive(true) {}
+warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType), entity(1,
+                                                                                                                    representingChar,
+                                                                                                                    Warrior), hitPoints(100), ammo(ammo), score(0), alive(true) {}
 
 void warrior::addScore(int addition) {
     score+=addition;
@@ -77,6 +79,37 @@ bool warrior::have2Kills() {
     return false;
 }
 
+void warrior::consumeResource(resource *resourceToConsume) {
+    if (resourceToConsume->getType()==Ammo) {
+        addAmmo(resourceToConsume->resupply());
+    } else{
+        heal(resourceToConsume->resupply());
+    }
+
+    std::cout << ((warriorType == DERICK) ? "Derick" : "Chichonne") << " found a"
+              << ((resourceToConsume->getType() == Ammo) ? "n ammunition box" : " medicine kit") << "!\n";
+
+    delete resourceToConsume;
+    std::cout<< *this;
+}
+
+warriorTypes warrior::getWarriorType() const {
+    return warriorType;
+}
+
+int warrior::getCurrentX() const {
+    return currentX;
+}
+
+void warrior::updateLocation(int currentX, int currentY) {
+    warrior::currentX = currentX;
+    warrior::currentY = currentY;
+}
+
+int warrior::getCurrentY() const {
+    return currentY;
+}
+
 derick::derick() : warrior('D', 30, DERICK) {}
 
 int derick::shoot() {
@@ -95,10 +128,9 @@ int derick::shoot() {
 }
 
 std::ostream &operator<<(std::ostream &os, const derick &derick) {
-    os << "==============================\n"
-          "Derick \"Deadeye\" Dreams\n"
-          "Green skin is so last season.\n"
-          "=============================\n";
+    os << "=============\n"
+          "Derick Dreams\n"
+          "=============\n";
     os<< "HP:\t\t"<<derick.getHitPoints()<<"\n";
     os<< "Ammo:\t"<<derick.getAmmo()<<"\n";
     return os;
@@ -112,6 +144,15 @@ void derick::printOptions() {
 
 int derick::melee() const {
     return 1;
+}
+
+void derick::verbosePrint() {
+    std::cout <<  "======================\n"
+                  "Derick \"Deadeye\"Dreams\n"
+                  "======================\n";
+    std::cout<< "HP:\t\t"<<getHitPoints()<<"\n";
+    std::cout<< "Ammo:\t"<<getAmmo()<<"\n";
+    std::cout <<"Derick has killed: " <<getKillList()<<"\n";
 }
 
 
@@ -147,10 +188,9 @@ void chichonne::addKill(entity *zombieKilled) {
 }
 
 std::ostream &operator<<(std::ostream &os, const chichonne &chichonne) {
-    os << "===============================\n"
-          "Chichonne \"Crimsonblade\" Mohawk\n"
-          "Steel for breakfast,sir?.\n"
-          "===============================\n";
+    os << "=================\n"
+          "Chichonne Mohawk\n"
+          "=================\n";
     os<< "HP:\t\t"<<chichonne.getHitPoints()<<"\n";
     os<< "Ammo:\t"<<chichonne.getAmmo()<<"\n";
     os<<"Blade level: "<< ((!chichonne.megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
@@ -161,4 +201,14 @@ void chichonne::printOptions() {
     std::cout << "Available Actions: \n";
     std::cout << "[S]hoot\n[K]atana\n";
     std::cout << "How Do You Proceed?\n";
+}
+
+void chichonne::verbosePrint() {
+    std::cout <<  "===============================\n"
+                  "Chichonne \"Crimsonblade\" Mohawk\n"
+                  "===============================\n";
+    std::cout<< "HP:\t\t"<<getHitPoints()<<"\n";
+    std::cout<< "Ammo:\t"<<getAmmo()<<"\n";
+    std::cout<<"Blade level: "<< ((!megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
+    std::cout <<"Chichonne has killed: " <<getKillList()<<"\n";
 }

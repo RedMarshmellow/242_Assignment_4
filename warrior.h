@@ -4,6 +4,7 @@
 #include <string>
 #include <ostream>
 #include "zombie.h"
+#include "resource.h"
 
 //warrior classes here
 
@@ -11,21 +12,25 @@ enum warriorTypes{DERICK,CHICHONNE};
 
 class warrior:public entity {
 private:
-    enum warriorTypes warriorType;
+    warriorTypes warriorType;
     bool alive;
     int hitPoints;
     int ammo;
     std::string killList;
     int score;
+    int currentX=-1;
+    int currentY=-1;
 protected:
     bool have2Kills(); //only want chichonne to access this;
 public:
     warrior(char representingChar, int ammo, enum warriorTypes warriorType);
 
+    warriorTypes getWarriorType() const;
+
+    virtual void verbosePrint() = 0;
+
     virtual void printOptions() = 0;
-
     virtual int shoot() = 0;
-
     virtual int melee() const = 0;
 
     virtual void addKill(entity* zombieKilled);
@@ -38,10 +43,17 @@ public:
     void addAmmo(int amount);
     void heal(int hitPoints);
     void takeDamage(int hitPoints);
-
+    void consumeResource(resource *resourceToConsume);
     const std::string & getKillList() const;
 
+    int getCurrentX() const;
+
+    int getCurrentY() const;
+
     int getScore() const;
+
+    void updateLocation(int currentX, int currentY);
+
 };
 
 class derick:public warrior {
@@ -50,6 +62,7 @@ public:
     int melee() const override;
     derick();
     friend std::ostream &operator<<(std::ostream &os, const derick &derick);
+    void verbosePrint() override;
 
     void printOptions() override;
 };
@@ -65,6 +78,8 @@ public:
     int shoot()override;
 
     friend std::ostream &operator<<(std::ostream &os, const chichonne &chichonne);
+
+    void verbosePrint() override;
 
     void addKill(entity *zombieKilled) override;
 
