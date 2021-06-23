@@ -12,11 +12,10 @@ int calcDMG(int base, int dice) {
     if (dice >= 5)
         return base * 10;
     else if (dice <= 2)
-        return base*2;
+        return base * 2;
     else
-        return base*5;
+        return base * 5;
 }
-
 
 
 int battle(warrior *Warrior, zombie *Zombie) {
@@ -29,11 +28,11 @@ int battle(warrior *Warrior, zombie *Zombie) {
     //print no worky because it doesn't know which class method to use
     //preferably print more info about crits and how many shots fired etc
     while (Warrior->isAlive() && !Zombie->isKO()) {
-        cout << *Warrior;
+        Warrior->printStats();
         Zombie->printInfo(1);
         Warrior->printOptions();
         cin >> selection;
-        playerAttack(selection, Warrior,Zombie);
+        playerAttack(selection, Warrior, Zombie);
         if (Zombie->isKO())
             break;
         Zombie->printInfo(2);
@@ -52,12 +51,14 @@ int battle(warrior *Warrior, zombie *Zombie) {
     }
 }
 
-void playerAttack(char attack,warrior* Warrior,zombie* Zombie) {
+void playerAttack(char attack, warrior *Warrior, zombie *Zombie) {
     if (attack == 'K') {
-        (Warrior->getWarriorType()==CHICHONNE) ? cout << "Chichonne Strikes At The Zombie With Her Katana!\n" : cout << "Derek Desperately Slashes The Zombie With His Knife!\n";
+        (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Strikes At The Zombie With Her Katana!\n" : cout
+                << "Derek Desperately Slashes The Zombie With His Knife!\n";
         Zombie->updateHP(Warrior->melee());
     } else {
-        (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Fires Her Pistol!\n" : cout << "Derek Fires His Revolver!\n";
-        Zombie->updateHP(calcDMG(Warrior->shoot(),rollDice()));
+        (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Fires Her Pistol!\n" : cout
+                << "Derek Fires His Revolver!\n";
+        Zombie->updateHP(calcDMG(Warrior->shoot(), rollDice()));
     }
 }

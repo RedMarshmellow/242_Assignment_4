@@ -9,7 +9,7 @@ This is my own work that is done by myself and my team-mate only */
 
 int main() {
     srand(time(NULL));
-    adamTest();
+    ahmedTest();
     std::cout << "The Eating of Beans will Not Be Tolerated In This Repo" << std::endl;
     return 0;
 }

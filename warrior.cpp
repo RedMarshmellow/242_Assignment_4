@@ -2,13 +2,16 @@
 #include <iostream>
 #include "warrior.h"
 
-warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType), entity(1, representingChar,Warrior),
-                                                                                    hitPoints(100), ammo(ammo), score(0), alive(true)
-                                                                                                                    { setLocation(-1,-1,0);}
+warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType),
+                                                                                   entity(1, representingChar, Warrior),
+                                                                                   hitPoints(100), ammo(ammo), score(0),
+                                                                                   alive(true) {
+    setLocation(-1, -1, 0);
+}
 
 
 void warrior::addScore(int addition) {
-    score+=addition;
+    score += addition;
 }
 
 bool warrior::isAlive() const {
@@ -27,26 +30,26 @@ int warrior::getScore() const {
     return score;
 }
 
-const std::string & warrior::getKillList() const {
+const std::string &warrior::getKillList() const {
     return killList;
 }
 
-void warrior::addKill(entity *zombieKilled){
+void warrior::addKill(entity *zombieKilled) {
     //function to automatically update score and killList from zombie entity
     //also will keep track of katana Leveling
     //note: as of writing, the function will also delete zombie object, may change later
 
     int size = zombieKilled->getSize() - 1;
-    int scores[3] = {50,75,100};
+    int scores[3] = {50, 75, 100};
     addScore(scores[size]);
 
-    std::string labels[3] = {"Small Zombie","Medium Zombie","Large Zombie"};
+    std::string labels[3] = {"Small Zombie", "Medium Zombie", "Large Zombie"};
     if (!killList.empty())
-        killList+=",";
+        killList += ",";
 
-    killList+=labels[size];
+    killList += labels[size];
 
-    std::cout << labels[size] <<" Slain!\n";
+    std::cout << labels[size] << " Slain!\n";
 }
 
 void warrior::consumeAmmo(int ammo) {
@@ -55,8 +58,8 @@ void warrior::consumeAmmo(int ammo) {
 
 void warrior::takeDamage(int hitPoints) {
     warrior::hitPoints -= hitPoints;
-    if (hitPoints<=0)
-        alive= false;
+    if (hitPoints <= 0)
+        alive = false;
 }
 
 void warrior::heal(int hitPoints) {
@@ -64,14 +67,14 @@ void warrior::heal(int hitPoints) {
 }
 
 void warrior::addAmmo(int amount) {
-    ammo+=amount;
+    ammo += amount;
 }
 
 bool warrior::have2Kills() {
     //checking if 2 zombies are killed
     //if <=1 zombies are killed, then killList has no commas
     //if >=2 zombies are killed, killList has at least 1 comma
-    if (killList.find(',')!=std::string::npos){
+    if (killList.find(',') != std::string::npos) {
         //if at least 1 comma found
         return true;
     }
@@ -79,9 +82,9 @@ bool warrior::have2Kills() {
 }
 
 void warrior::consumeResource(resource *resourceToConsume) {
-    if (resourceToConsume->getType()==Ammo) {
+    if (resourceToConsume->getType() == Ammo) {
         addAmmo(resourceToConsume->resupply());
-    } else{
+    } else {
         heal(resourceToConsume->resupply());
     }
 
@@ -112,20 +115,11 @@ int derick::shoot() {
     if (getAmmo() > 1) {
         consumeAmmo(2);
         return 2;
-    } else if (getAmmo() == 1){
+    } else if (getAmmo() == 1) {
         consumeAmmo(1);
         return 1;
     } else
         return 0;
-}
-
-std::ostream &operator<<(std::ostream &os, const derick &derick) {
-    os << "=============\n"
-          "Derick Dreams\n"
-          "=============\n";
-    os<< "HP:\t\t"<<derick.getHitPoints()<<"\n";
-    os<< "Ammo:\t"<<derick.getAmmo()<<"\n";
-    return os;
 }
 
 void derick::printOptions() {
@@ -139,16 +133,24 @@ int derick::melee() const {
 }
 
 void derick::verbosePrint() {
-    std::cout <<  "======================\n"
-                  "Derick \"Deadeye\"Dreams\n"
-                  "======================\n";
-    std::cout<< "HP:\t\t"<<getHitPoints()<<"\n";
-    std::cout<< "Ammo:\t"<<getAmmo()<<"\n";
-    if (!getKillList().empty())std::cout <<"Derick has killed: " <<getKillList()<<"\n";
+    std::cout << "======================\n"
+                 "Derick \"Deadeye\"Dreams\n"
+                 "======================\n";
+    std::cout << "HP:\t\t" << getHitPoints() << "\n";
+    std::cout << "Ammo:\t" << getAmmo() << "\n";
+    if (!getKillList().empty())std::cout << "Derick has killed: " << getKillList() << "\n";
+}
+
+void derick::printStats() {
+    std::cout << "=============\n"
+                 "Derick Dreams\n";
+    std::cout << "HP:\t\t" << this->getHitPoints() << "\n";
+    std::cout << "Ammo:\t" << this->getAmmo() << "\n";
+    std::cout << "=============\n";
 }
 
 
-chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false){}
+chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false) {}
 
 int chichonne::melee() const {
     if (!megaKatana)
@@ -161,7 +163,7 @@ int chichonne::shoot() {
     //function to attempt to shoot, and keep track of ammo
     //returns 1 if shooting successful
     //returns 0 if out of bullets
-    if (getAmmo()>0) {
+    if (getAmmo() > 0) {
         consumeAmmo(1);
         return 1;
     } else
@@ -171,22 +173,12 @@ int chichonne::shoot() {
 void chichonne::addKill(entity *zombieKilled) {
     //overriding to account for keeping track of katana level
     warrior::addKill(zombieKilled);
-    if (!megaKatana){
+    if (!megaKatana) {
         if (have2Kills()) {
-            megaKatana= true;
-            std::cout<<"Chichonne's katana has leveled to a Mega Katana!\n";
+            megaKatana = true;
+            std::cout << "Chichonne's katana has leveled to a Mega Katana!\n";
         }
     }
-}
-
-std::ostream &operator<<(std::ostream &os, const chichonne &chichonne) {
-    os << "=================\n"
-          "Chichonne Mohawk\n"
-          "=================\n";
-    os<< "HP:\t\t"<<chichonne.getHitPoints()<<"\n";
-    os<< "Ammo:\t"<<chichonne.getAmmo()<<"\n";
-    os<<"Blade level: "<< ((!chichonne.megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
-    return os;
 }
 
 void chichonne::printOptions() {
@@ -196,11 +188,20 @@ void chichonne::printOptions() {
 }
 
 void chichonne::verbosePrint() {
-    std::cout <<  "===============================\n"
-                  "Chichonne \"Crimsonblade\" Mohawk\n"
-                  "===============================\n";
-    std::cout<< "HP:\t\t"<<getHitPoints()<<"\n";
-    std::cout<< "Ammo:\t"<<getAmmo()<<"\n";
-    std::cout<<"Blade level: "<< ((!megaKatana)?"Level 1 - Regular katana":"Level 2 - Mega-Katana");
-    std::cout <<"Chichonne has killed: " <<getKillList()<<"\n";
+    std::cout << "===============================\n"
+                 "Chichonne \"Crimsonblade\" Mohawk\n"
+                 "===============================\n";
+    std::cout << "HP:\t\t" << getHitPoints() << "\n";
+    std::cout << "Ammo:\t" << getAmmo() << "\n";
+    std::cout << "Blade level: " << ((!megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana");
+    std::cout << "Chichonne has killed: " << getKillList() << "\n";
+}
+
+void chichonne::printStats() {
+    std::cout << "=================\n"
+                 "Chichonne Mohawk\n";
+    std::cout << "HP:\t\t" << this->getHitPoints() << "\n";
+    std::cout << "Ammo:\t" << this->getAmmo() << "\n";
+    std::cout << "Blade level: " << ((!this->megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana");
+    std::cout << "=============\n";
 }

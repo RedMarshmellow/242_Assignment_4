@@ -14,7 +14,7 @@ int zombie::getDmg() const {
 
 void zombie::updateHP(int dmg) {
     this->HP -= dmg;
-    if(this->HP <= 0)
+    if (this->HP <= 0)
         this->KO = true;
 }
 
@@ -22,12 +22,12 @@ bool zombie::isKO() const {
     return KO;
 }
 
-zombie::zombie(int size) : entity(size,'_',Zombie) {
-    if(size==1)
+zombie::zombie(int size) : entity(size, '_', Zombie) {
+    if (size == 1)
         setRepresentingChar('S');
-    else if (size==2)
+    else if (size == 2)
         entity::setRepresentingChar('M');
-    else if (size==3)
+    else if (size == 3)
         entity::setRepresentingChar('L');
     switch (size) {
         case 1:
@@ -53,10 +53,10 @@ zombie::zombie(int size) : entity(size,'_',Zombie) {
     }
 }
 
-void zombie::printInfo(int state) {
+void zombie::printInfo(int state) const {
     switch (state) {
         case 1:
-            std::cout << "Zombie HP: " << this->getHp() << "===============================\n";
+            std::cout << "Zombie HP: " << this->getHp() << "\n===============================\n";
             break;
         case 2:
             std::cout << "Zombie Attacks for " << this->getDmg() << " Damage!\n===============================\n";
