@@ -18,8 +18,6 @@ private:
     int ammo;
     std::string killList;
     int score;
-    int currentX=-1;
-    int currentY=-1;
 protected:
     bool have2Kills(); //only want chichonne to access this;
 public:
@@ -37,6 +35,9 @@ public:
     bool isAlive() const;
     int getHitPoints() const;
     int getAmmo() const;
+    int getScore() const;
+    int getX() const;
+    int getY() const;
 
     void addScore(int addition);
     void consumeAmmo(int ammo);
@@ -46,13 +47,7 @@ public:
     void consumeResource(resource *resourceToConsume);
     const std::string & getKillList() const;
 
-    int getCurrentX() const;
 
-    int getCurrentY() const;
-
-    int getScore() const;
-
-    void updateLocation(int currentX, int currentY);
 
 };
 

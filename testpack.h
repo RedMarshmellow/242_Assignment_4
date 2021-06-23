@@ -18,7 +18,6 @@ int adamTest(){
         std::cin >> x;
         std::cin>>sep;
         std::cin >> y;
-        b.move(p, x, y);
         if (x>=0 && x<b.getSize() && y>=0 && y<b.getSize())
             b.move(p, x, y);
         else

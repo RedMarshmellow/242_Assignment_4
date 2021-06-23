@@ -26,8 +26,10 @@ int battle(warrior *Warrior, zombie *Zombie) {
 
     char selection;
     cout << "Zombie Encounter!\n";
+    //print no worky because it doesn't know which class method to use
+    //preferably print more info about crits and how many shots fired etc
     while (Warrior->isAlive() && !Zombie->isKO()) {
-        cout << Warrior;
+        cout << *Warrior;
         Zombie->printInfo(1);
         Warrior->printOptions();
         cin >> selection;
@@ -40,7 +42,7 @@ int battle(warrior *Warrior, zombie *Zombie) {
     if (Zombie->isKO()) {
         Zombie->printInfo(3);
         Warrior->addKill(Zombie);
-        cout << "Score: " << Warrior->getScore();
+        cout << "Score: " << Warrior->getScore() << "\n";
         return 0;
     }
     if (!Warrior->isAlive()) {

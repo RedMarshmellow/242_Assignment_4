@@ -159,13 +159,13 @@ void grid::placeEntity(int sourceX, int sourceY, int direction, entity *entityPl
     int x = sourceX,y=sourceY;
 
 
-    const int directionOperations[8][2] = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
     int entitySize = entityPlaced->getSize();
     for (int i = 0; i < entitySize; ++i) {
         board[x][y] = entityPlaced;
         x+=directionOperations[direction][0];
         y+=directionOperations[direction][1];
     }
+    entityPlaced->setLocation(sourceX,sourceY,direction);
 }
 
 std::ostream &operator<<(std::ostream &os, const grid &grid) {
@@ -208,19 +208,13 @@ std::ostream &operator<<(std::ostream &os, const grid &grid) {
 
 void grid::move(warrior *warriorToMove, int targetX, int targetY) {
     //main function to move players around the board.
-
-    bool firstMove = (warriorToMove->getCurrentX()==-1);
-    if (!firstMove) {
-        if (!checkValidMove(warriorToMove, targetX, targetY))
-            //redundant check since validity is checked outside, but just in case
-            return;
-    } else if (!(targetX>=0 && targetX<size && targetY>=0 && targetY<size))
+    if (!checkValidMove(warriorToMove, targetX, targetY))
+        //redundant check since validity is checked outside, but just in case
         return;
 
-    //if entity is a zombie, don't delete
-    if (!firstMove)
-        //if move is valid, begin move by removing old warrior from board
-        removeFromBoard(warriorToMove, warriorToMove->getCurrentX(), warriorToMove->getCurrentY());
+    //if move is valid, begin move by removing old warrior from board
+    if (warriorToMove->getSourceX()!=-1)
+        removeFromBoard(warriorToMove);
     if (board[targetX][targetY]== nullptr) {
         board[targetX][targetY] = warriorToMove;
     }else if (board[targetX][targetY]->getType() == Zombie) {
@@ -229,92 +223,117 @@ void grid::move(warrior *warriorToMove, int targetX, int targetY) {
             //if player loses
             return;
         } else {
-            removeFromBoard(board[targetX][targetY],targetX,targetY);
+            entity* zombieToDelete = removeFromBoard(board[targetX][targetY]);
+            delete zombieToDelete;
             board[targetX][targetY]=warriorToMove;
         }
     } else{
         //if resource, consume it
         warriorToMove->consumeResource((resource *) board[targetX][targetY]);
-        removeFromBoard(board[targetX][targetY],targetX,targetY);
+        entity* resourceToDelete = removeFromBoard(board[targetX][targetY]);
+        delete resourceToDelete;
         board[targetX][targetY] = warriorToMove;
     }
 
-    warriorToMove->updateLocation(targetX,targetY);
+    warriorToMove->setLocation(targetX,targetY,0);
 }
 
 bool grid::checkValidMove(warrior *warriorToMove, int targetX, int targetY) {
     //if a player wants to move to a coordinate, they have to be adjacent to it
-    for (int i = 0; i < 8; ++i) {
-        int x = targetX, y = targetY;
-        x+= directionOperations[i][0];
-        y+= directionOperations[i][1];
-        if (x >= 0 && x < size && y >= 0 && y < size &&
-        board[x][y] == warriorToMove) {
+    if (warriorToMove->getX() == -1){
+        //if this is the first move, just check for board boundaries
+        if (targetX>=0 && targetX<size && targetY>=0 && targetY<size)
             return true;
-        }
     }
+
+    if (warriorToMove->getY()==targetX && warriorToMove->getY()==targetY) {
+        std::cout<<"You're already there!\n";
+        return false;
+    }
+
+    if (board[targetX][targetY] != nullptr && board[targetX][targetY]->getType()==Warrior) {
+        std::cout << "Can't move to another warrior's space!\n";
+        return false;
+    }
+
+    //check for adjacency by comparing to current location of warrior
+    int differenceX= abs(warriorToMove->getX()-targetX);
+    int differenceY= abs(warriorToMove->getY()-targetY);
+    if (differenceY<=1 && differenceX<= 1)
+        return true;
+
     return false;
 }
 
-entity *grid::removeFromBoard(entity *entityToDelete, int locationX, int locationY) {
+entity *grid::removeFromBoard(entity *entityToDelete) {
     //function to remove an entity from the board
     //if object's size >1, the function finds the direction the object is deployed in
     //then uses that to remove it from the board;
-    board[locationX][locationY] = nullptr;
-    if (entityToDelete->getSize()==1)
-        return entityToDelete;
-    else{
-        //first find direction
-        bool foundDirection= false;
-        int direction=0;
-        for (int x = locationX, y = locationY;
-         direction < 8 && !foundDirection; //loop terminates until direction of object is found
-        ++direction) {
 
-            if (x >= 0 && x < size && y >= 0 && y < size &&
-            board[x][y]==entityToDelete) {
-                //once object is found, remove it
-                board[x][y] = nullptr;
-                foundDirection = true;
-            }
-            else {
-                x = locationX + directionOperations[direction][0];
-                y = locationY + directionOperations[direction][1];
-            }
-        }
+//    board[locationX][locationY] = nullptr;
+//    if (entityToDelete->getSize()==1)
+//        return entityToDelete;
+//    else{
+//        //first find direction
+//        bool foundDirection= false;
+//        int direction=0;
+//        for (int x = locationX, y = locationY;
+//         direction < 8 && !foundDirection; //loop terminates until direction of object is found
+//        ++direction) {
+//
+//            if (x >= 0 && x < size && y >= 0 && y < size &&
+//            board[x][y]==entityToDelete) {
+//                //once object is found, remove it
+//                board[x][y] = nullptr;
+//                foundDirection = true;
+//            }
+//            else {
+//                x = locationX + directionOperations[direction][0];
+//                y = locationY + directionOperations[direction][1];
+//            }
+//        }
+//
+//        if (entityToDelete->getSize() == 3) {
+//            //if entity is size 3, that means we could have encountered the middle of it
+//            //thus we need to check if the original encountered location has another adjacent duplicate
+//
+//            bool foundAnotherDuplicate= false;
+//            for (int localDir = direction + 1, x = locationX, y = locationY;
+//                localDir < 8 && !foundAnotherDuplicate;
+//                ++localDir) {
+//
+//                //create sourceDir so as not to overwrite previously found direction
+//                //perform search right after prevously found direction so as to find if there are other duplicates
+//                if (x >= 0 && x < size && y >= 0 && y < size &&
+//                    board[x][y] == entityToDelete) {
+//
+//                    //once object is found, remove it
+//                    board[x][y] = nullptr;
+//                    foundAnotherDuplicate = true;
+//                } else {
+//                    x = locationX += directionOperations[direction][0];
+//                    y = locationY += directionOperations[direction][1];
+//                }
+//            }
+//
+//            if (!foundAnotherDuplicate){
+//                //if earlier loop did not find a duplicate that means we didnt encounter the middle of the entity
+//                //and just need to continue in the previously found direction
+//                int x= locationX + 2* directionOperations[direction][0];
+//                int y = locationY + 2* directionOperations[direction][1];
+//                board[x][y] = nullptr;
+//            }
+//        }
+//
+//    }
 
-        if (entityToDelete->getSize() == 3) {
-            //if entity is size 3, that means we could have encountered the middle of it
-            //thus we need to check if the original encountered location has another adjacent duplicate
-
-            bool foundAnotherDuplicate= false;
-            for (int localDir = direction + 1, x = locationX, y = locationY;
-                localDir < 8 && !foundAnotherDuplicate;
-                ++localDir) {
-
-                //create sourceDir so as not to overwrite previously found direction
-                //perform search right after prevously found direction so as to find if there are other duplicates
-                if (x >= 0 && x < size && y >= 0 && y < size &&
-                    board[x][y] == entityToDelete) {
-
-                    //once object is found, remove it
-                    board[x][y] = nullptr;
-                    foundAnotherDuplicate = true;
-                } else {
-                    x = locationX += directionOperations[direction][0];
-                    y = locationY += directionOperations[direction][1];
-                }
-            }
-
-            if (!foundAnotherDuplicate){
-                //if earlier loop did not find a duplicate that means we didnt encounter the middle of the entity
-                //and just need to continue in the previously found direction
-                int x= locationX + 2* directionOperations[direction][0];
-                int y = locationY + 2* directionOperations[direction][1];
-                board[x][y] = nullptr;
-            }
-        }
-
+    int x= entityToDelete->getSourceX();
+    int y = entityToDelete->getSourceY();
+    int direction = entityToDelete->getDirection();
+    for (int i = 0; i < entityToDelete->getSize(); ++i) {
+        board[x][y] = nullptr;
+        x += directionOperations[direction][0];
+        y += directionOperations[direction][1];
     }
 
     return entityToDelete;

@@ -2,9 +2,10 @@
 #include <iostream>
 #include "warrior.h"
 
-warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType), entity(1,
-                                                                                                                    representingChar,
-                                                                                                                    Warrior), hitPoints(100), ammo(ammo), score(0), alive(true) {}
+warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType), entity(1, representingChar,Warrior),
+                                                                                    hitPoints(100), ammo(ammo), score(0), alive(true)
+                                                                                                                    { setLocation(-1,-1,0);}
+
 
 void warrior::addScore(int addition) {
     score+=addition;
@@ -46,8 +47,6 @@ void warrior::addKill(entity *zombieKilled){
     killList+=labels[size];
 
     std::cout << labels[size] <<" Slain!\n";
-
-    delete zombieKilled;
 }
 
 void warrior::consumeAmmo(int ammo) {
@@ -89,25 +88,18 @@ void warrior::consumeResource(resource *resourceToConsume) {
     std::cout << ((warriorType == DERICK) ? "Derick" : "Chichonne") << " found a"
               << ((resourceToConsume->getType() == Ammo) ? "n ammunition box" : " medicine kit") << "!\n";
 
-    delete resourceToConsume;
-    std::cout<< *this;
 }
 
 warriorTypes warrior::getWarriorType() const {
     return warriorType;
 }
 
-int warrior::getCurrentX() const {
-    return currentX;
+int warrior::getX() const {
+    return getSourceX();
 }
 
-void warrior::updateLocation(int currentX, int currentY) {
-    warrior::currentX = currentX;
-    warrior::currentY = currentY;
-}
-
-int warrior::getCurrentY() const {
-    return currentY;
+int warrior::getY() const {
+    return getSourceY();
 }
 
 derick::derick() : warrior('D', 30, DERICK) {}
@@ -152,7 +144,7 @@ void derick::verbosePrint() {
                   "======================\n";
     std::cout<< "HP:\t\t"<<getHitPoints()<<"\n";
     std::cout<< "Ammo:\t"<<getAmmo()<<"\n";
-    std::cout <<"Derick has killed: " <<getKillList()<<"\n";
+    if (!getKillList().empty())std::cout <<"Derick has killed: " <<getKillList()<<"\n";
 }
 
 

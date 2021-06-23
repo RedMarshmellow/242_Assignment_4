@@ -24,3 +24,21 @@ std::ostream &operator<<(std::ostream &os, const entity &entity) {
 entityTypes entity::getType() const {
     return type;
 }
+
+void entity::setLocation(int x, int y, int direction){
+    sourceX=x;
+    sourceY=y;
+    entity::direction = direction;
+}
+
+int entity::getSourceX() const {
+    return sourceX;
+}
+
+int entity::getSourceY() const {
+    return sourceY;
+}
+
+int entity::getDirection() const {
+    return direction;
+}

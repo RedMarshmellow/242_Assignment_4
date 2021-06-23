@@ -26,7 +26,6 @@ public:
     entity* getEntity(int x, int y) const;
 
     void move(warrior *warriorToMove, int targetX, int targetY);
-    entity * removeFromBoard(entity* entityToDelete, int locationX, int locationY); //remove an object when you know its coordinates
     //remove an object when you dont know its coordinates
 
 
@@ -35,9 +34,10 @@ public:
 
     virtual ~grid();
 
-    void deploy(std::vector<entity *> entitiesToBeAdded);
 
 private:
+    void deploy(std::vector<entity *> entitiesToBeAdded);
+    entity *removeFromBoard(entity *entityToDelete); //remove an object when you know its coordinates
     std::vector<entity *> createEntities() const;
     bool checkFree(int sourceX, int sourceY, int direction, int entitySize);
     void placeEntity(int sourceX, int sourceY, int direction, entity *entityPlaced);
