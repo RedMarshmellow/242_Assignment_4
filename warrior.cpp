@@ -114,11 +114,14 @@ int derick::shoot() {
     //returns 0 if out of ammo
     if (getAmmo() > 1) {
         consumeAmmo(2);
+        std::cout << "Two Shots Are Fired!\n";
         return 2;
     } else if (getAmmo() == 1) {
         consumeAmmo(1);
+        std::cout << "One Shot Is Fired!\n";
         return 1;
     } else
+        std::cout << "The Hammer Falls..........But No Shots Are Heard, Out of Ammo!\n";
         return 0;
 }
 
@@ -165,8 +168,10 @@ int chichonne::shoot() {
     //returns 0 if out of bullets
     if (getAmmo() > 0) {
         consumeAmmo(1);
+        std::cout << "A Bullet Races Out of the Pistol's Barrel!\n";
         return 1;
     } else
+        std::cout << "A Loud 'Click!' Rings Out of the Pistol, Out of Ammo!\n";
         return 0;
 }
 

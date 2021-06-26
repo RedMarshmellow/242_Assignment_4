@@ -14,6 +14,7 @@ int zombie::getDmg() const {
 
 void zombie::updateHP(int dmg) {
     this->HP -= dmg;
+    std::cout << "Zombie takes " << dmg << " Damage!\n";
     if (this->HP <= 0)
         this->KO = true;
 }
@@ -49,7 +50,7 @@ zombie::zombie(int size) : entity(size, '_', Zombie) {
             KO = false;
             break;
         default:
-            throw "UNDEFINED ZOMBIE TYPE\n";
+            break;
     }
 }
 

@@ -29,7 +29,7 @@ int adamTest() {
 };
 
 int ahmedTest() {
-    zombie *z = new zombie(1);
+    zombie *z = new zombie(3);
     derick *p = new derick;
     int test = battle(p, z);
     return 0;

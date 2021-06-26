@@ -9,10 +9,14 @@ int rollDice() {
 }
 
 int calcDMG(int base, int dice) {
-    if (dice >= 5)
+    if (dice >= 5) {
+        std::cout << "Critical Hit! The Bullet Lands Betweem The Zombie's Eyes!\n";
         return base * 10;
-    else if (dice <= 2)
+    }
+    else if (dice <= 2) {
+        std::cout << "Critical Fail! The Bullet Barely Grazes The Zombie's Skin!\n";
         return base * 2;
+    }
     else
         return base * 5;
 }
