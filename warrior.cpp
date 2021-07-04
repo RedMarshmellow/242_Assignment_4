@@ -4,7 +4,7 @@
 
 warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType),
                                                                                    entity(1, representingChar, Warrior),
-                                                                                   hitPoints(100), ammo(ammo), score(0),
+                                                                                   hitPoints(1), ammo(ammo), score(0),
                                                                                    alive(true) {
     setLocation(-1, -1, 0);
 }
@@ -56,10 +56,12 @@ void warrior::consumeAmmo(int ammo) {
     warrior::ammo -= ammo;
 }
 
-void warrior::takeDamage(int hitPoints) {
-    warrior::hitPoints -= hitPoints;
-    if (hitPoints <= 0)
+void warrior::takeDamage(int damage) {
+    hitPoints -= damage;
+    if (hitPoints <= 0) {
         alive = false;
+        hitPoints=0;
+    }
 }
 
 void warrior::heal(int hitPoints) {

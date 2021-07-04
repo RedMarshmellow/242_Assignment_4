@@ -58,7 +58,7 @@ public:
 
     void heal(int hitPoints);
 
-    void takeDamage(int hitPoints);
+    void takeDamage(int damage);
 
     void consumeResource(resource *resourceToConsume);
 
