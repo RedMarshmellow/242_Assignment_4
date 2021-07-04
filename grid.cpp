@@ -391,7 +391,7 @@ bool grid::coordinatesInRange(int x, int y) const {
     return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-bool grid::removeWarriors(warrior *a, warrior *b) {
+void grid::removeWarriors(warrior *a, warrior *b) {
     //the pointers to the warriors must be removed from the board before destruction so we don't double delete
     removeFromBoard(a);
     removeFromBoard(b);

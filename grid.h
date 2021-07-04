@@ -33,7 +33,7 @@ public:
     void move(warrior *warriorToMove, int targetX, int targetY);
     void placeWarriors(warrior* a, warrior* b);
     bool isPlayerTrapped(warrior* player);
-    bool removeWarriors(warrior* a, warrior* b);
+    void removeWarriors(warrior* a, warrior* b);
 
     friend std::ostream &operator<<(std::ostream &os, const grid &grid);
     void debugPrint();
