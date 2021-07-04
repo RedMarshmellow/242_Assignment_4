@@ -382,6 +382,7 @@ bool grid::isPlayerTrapped(warrior *player) {
             return false;
     }
 
+    std::cout<<"Uh oh! "<< ((player->getWarriorType() == DERICK)?"Derick ":"Chichonne ") << "is trapped and cannot move!\nThey are eliminated from the game!\n";
     return true;
 }
 
