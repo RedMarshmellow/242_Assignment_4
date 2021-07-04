@@ -25,12 +25,15 @@ int main() {
     //above line can be omitted to have players pick their initial locations
     printLegend();
     while(!gameOver){
-        std::cout<<board;
+        board.debugPrint();
         if(player1Playable) {
             std::cout << "===Player 1's turn===\n";
             player1->verbosePrint();
             play(player1, board);
         }
+
+        if (board.allZombiesDead())
+            break;
         if (player2Playable) {
             std::cout<<"===Player 2's turn===\n";
             player2->verbosePrint();
@@ -101,7 +104,7 @@ void play(warrior* player, grid& board){
 
     std::cout<<"\n";
     board.move(player, x, y);
-    std::cout << board;
+    board.debugPrint();
     std::cout<<"\n\n";
 }
 
