@@ -11,7 +11,7 @@ resource::resource(int size, char representingChar, int replenish, resourceTypes
                                                                                          replenish(replenish),
                                                                                          type(type) {}
 
-resourceTypes resource::getType() const {
+resourceTypes resource::getResourceType() const {
     return type;
 }
 

@@ -11,7 +11,10 @@ class grid {
 private:
     int size;
     entity*** board;
-    bool medkitsDiscovered, zombiesDiscovered, ammunitionDiscovered;
+    bool** visitedByDerek;
+    bool** visitedByChichonne;
+    int zombiesRemaining;
+    bool medkitsDiscovered, zombiesVisible, ammunitionDiscovered;
 
     //this constant list will return the operations to be done to the x and y coordinates in each direction
     //directions will be done like so
@@ -24,10 +27,13 @@ public:
     int getSize() const;
     entity ***getBoard() const;
     entity* getEntity(int x, int y) const;
+    bool allZombiesDead() const;
 
+    bool checkValidMove(warrior *warriorToMove, int targetX, int targetY);
     void move(warrior *warriorToMove, int targetX, int targetY);
-    //remove an object when you dont know its coordinates
-
+    void placeWarriors(warrior* a, warrior* b);
+    bool isPlayerTrapped(warrior* player);
+    bool removeWarriors(warrior* a, warrior* b);
 
     friend std::ostream &operator<<(std::ostream &os, const grid &grid);
     void debugPrint();
@@ -36,12 +42,13 @@ public:
 
 
 private:
+
     void deploy(std::vector<entity *> entitiesToBeAdded);
     entity *removeFromBoard(entity *entityToDelete); //remove an object when you know its coordinates
-    std::vector<entity *> createEntities() const;
+    std::vector<entity *> createEntities();
     bool checkFree(int sourceX, int sourceY, int direction, int entitySize);
     void placeEntity(int sourceX, int sourceY, int direction, entity *entityPlaced);
-    bool checkValidMove(warrior *warriorToMove, int targetX, int targetY);
+    bool coordinatesInRange(int x, int y) const;
 };
 
 void printLegend(); //declaration outside scope of class so it is reachable from other files.

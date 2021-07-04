@@ -13,7 +13,7 @@ public:
     resource(int size, char representingChar, int replenish, resourceTypes type);
 
 public:
-    resourceTypes getType() const;
+    resourceTypes getResourceType() const;
 
     int resupply();
 };

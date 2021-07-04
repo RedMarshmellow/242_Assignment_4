@@ -28,8 +28,6 @@ public:
 
     warriorTypes getWarriorType() const;
 
-    virtual void printStats() = 0;
-
     virtual void verbosePrint() = 0;
 
     virtual void printOptions() = 0;
@@ -67,6 +65,7 @@ public:
     const std::string &getKillList() const;
 
 
+
 };
 
 class derick : public warrior {
@@ -77,8 +76,6 @@ public:
     derick();
 
     void verbosePrint() override;
-
-    void printStats() override;
 
     void printOptions() override;
 };
@@ -94,8 +91,6 @@ public:
     int shoot() override;
 
     void verbosePrint() override;
-
-    void printStats() override;
 
     void addKill(entity *zombieKilled) override;
 

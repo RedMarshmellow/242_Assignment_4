@@ -32,7 +32,7 @@ int battle(warrior *Warrior, zombie *Zombie) {
     //print no worky because it doesn't know which class method to use
     //preferably print more info about crits and how many shots fired etc
     while (Warrior->isAlive() && !Zombie->isKO()) {
-        Warrior->printStats();
+        Warrior->verbosePrint();
         Zombie->printInfo(1);
         Warrior->printOptions();
         cin >> selection;
@@ -56,13 +56,19 @@ int battle(warrior *Warrior, zombie *Zombie) {
 }
 
 void playerAttack(char attack, warrior *Warrior, zombie *Zombie) {
-    if (attack == 'K') {
+    if (attack == 'K' || attack=='k') {
         (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Strikes At The Zombie With Her Katana!\n" : cout
                 << "Derek Desperately Slashes The Zombie With His Knife!\n";
         Zombie->updateHP(Warrior->melee());
-    } else {
+    } else if (attack == 'S' || attack=='s') {
         (Warrior->getWarriorType() == CHICHONNE) ? cout << "Chichonne Fires Her Pistol!\n" : cout
                 << "Derek Fires His Revolver!\n";
         Zombie->updateHP(calcDMG(Warrior->shoot(), rollDice()));
+    } else{
+        cout << "Invalid input, try again\n";
+        Warrior->printOptions();
+        char selection;
+        cin >> selection;
+        playerAttack(selection, Warrior, Zombie);
     }
 }

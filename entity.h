@@ -20,7 +20,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const entity &entity);
     char getRepresentingChar() const;
-    entityTypes getType() const;
+    entityTypes getEntityType() const;
     int getSize() const;
 
     void setLocation(int x, int y, int direction);

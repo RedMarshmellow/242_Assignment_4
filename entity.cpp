@@ -21,7 +21,7 @@ std::ostream &operator<<(std::ostream &os, const entity &entity) {
     return os;
 }
 
-entityTypes entity::getType() const {
+entityTypes entity::getEntityType() const {
     return type;
 }
 

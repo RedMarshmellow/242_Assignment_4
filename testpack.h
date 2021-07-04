@@ -5,14 +5,49 @@
 #include "grid.h"
 #include "warrior.h"
 #include "battlesystem.h"
+#include "iostream"
+
+void printEvent(std::string event){
+    int len = event.length()+4;
+    std::cout<<"+";
+    for (int i = 0; i < len; ++i) {
+        std::cout<<"-";
+    }
+    std::cout<<"+\n";
+    std::cout<<"|! "<<event<<" !|\n";
+    std::cout<<"+";
+    for (int i = 0; i < len; ++i) {
+        std::cout<<"-";
+    }
+    std::cout<<"+"<<std::endl;
+}
+
+class A{
+    public:
+    int x=5;
+    virtual void print() {
+        std::cout<<x<<std::endl;
+    }
+};
+
+class B: virtual public A{
+public:
+    int y=6;
+
+    void print()override{
+        std::cout<<y<<std::endl;
+    }
+};
 
 
 int adamTest() {
     derick *p = new derick;
+    chichonne *p2 = new chichonne;
     grid b(5);
+    b.placeWarriors(p,p2);
     int x, y;
     char sep;
-    b.debugPrint();
+    std::cout<<b;
 
     while (1) {
         p->verbosePrint();
@@ -23,7 +58,7 @@ int adamTest() {
             b.move(p, x, y);
         else
             std::cout << "error\n";
-        b.debugPrint();
+        std::cout << b;
     }
     return 0;
 };

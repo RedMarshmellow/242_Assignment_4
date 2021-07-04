@@ -82,14 +82,14 @@ bool warrior::have2Kills() {
 }
 
 void warrior::consumeResource(resource *resourceToConsume) {
-    if (resourceToConsume->getType() == Ammo) {
+    if (resourceToConsume->getResourceType() == Ammo) {
         addAmmo(resourceToConsume->resupply());
     } else {
         heal(resourceToConsume->resupply());
     }
 
     std::cout << ((warriorType == DERICK) ? "Derick" : "Chichonne") << " found a"
-              << ((resourceToConsume->getType() == Ammo) ? "n ammunition box" : " medicine kit") << "!\n";
+              << ((resourceToConsume->getResourceType() == Ammo) ? "n ammunition box" : " medicine kit") << "!\n";
 
 }
 
@@ -141,16 +141,10 @@ void derick::verbosePrint() {
                  "======================\n";
     std::cout << "HP:\t\t" << getHitPoints() << "\n";
     std::cout << "Ammo:\t" << getAmmo() << "\n";
+    std::cout << "Score:\t" << getScore() << "\n";
     if (!getKillList().empty())std::cout << "Derick has killed: " << getKillList() << "\n";
 }
 
-void derick::printStats() {
-    std::cout << "=============\n"
-                 "Derick Dreams\n";
-    std::cout << "HP:\t\t" << this->getHitPoints() << "\n";
-    std::cout << "Ammo:\t" << this->getAmmo() << "\n";
-    std::cout << "=============\n";
-}
 
 
 chichonne::chichonne() : warrior('C', 25, CHICHONNE), megaKatana(false) {}
@@ -198,15 +192,8 @@ void chichonne::verbosePrint() {
                  "===============================\n";
     std::cout << "HP:\t\t" << getHitPoints() << "\n";
     std::cout << "Ammo:\t" << getAmmo() << "\n";
-    std::cout << "Blade level: " << ((!megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana");
-    std::cout << "Chichonne has killed: " << getKillList() << "\n";
+    std::cout << "Score:\t" << getScore() << "\n";
+    std::cout << "Blade level: " << ((!megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana")<<"\n";
+    if (!getKillList().empty()) std::cout << "Chichonne has killed: " << getKillList() << "\n";
 }
 
-void chichonne::printStats() {
-    std::cout << "=================\n"
-                 "Chichonne Mohawk\n";
-    std::cout << "HP:\t\t" << this->getHitPoints() << "\n";
-    std::cout << "Ammo:\t" << this->getAmmo() << "\n";
-    std::cout << "Blade level: " << ((!this->megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana");
-    std::cout << "=============\n";
-}
