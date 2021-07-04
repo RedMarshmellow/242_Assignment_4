@@ -25,7 +25,7 @@ int main() {
     //above line can be omitted to have players pick their initial locations
     printLegend();
     while(!gameOver){
-        board.debugPrint();
+        std::cout << board;
         if(player1Playable) {
             std::cout << "===Player 1's turn===\n";
             player1->verbosePrint();
@@ -104,7 +104,7 @@ void play(warrior* player, grid& board){
 
     std::cout<<"\n";
     board.move(player, x, y);
-    board.debugPrint();
+    std::cout<<board;
     std::cout<<"\n\n";
 }
 
