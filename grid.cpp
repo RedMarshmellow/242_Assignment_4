@@ -115,6 +115,7 @@ std::vector<entity *> grid::createEntities() {
         entitiesToBeAdded.push_back(zombieToInsert);
         ammunition*  ammunitionToInsert = new ammunition;
         entitiesToBeAdded.push_back(ammunitionToInsert);
+        availableSizes[entitySize]=false;
 
         //could use a counter alongside array so as not to check it each loop but it's only 3 bytes
         if (availableSizes[0] == availableSizes[1] && availableSizes[1] == availableSizes[2] && availableSizes[2]== false){
@@ -139,6 +140,7 @@ std::vector<entity *> grid::createEntities() {
         availableSizes[entitySize] = false;
         medkit *medkitToBeAdded = new medkit(entitySize + 1);
         entitiesToBeAdded.push_back(medkitToBeAdded);
+        availableSizes[entitySize]=false;
 
         if(availableSizes[0]==availableSizes[1] && availableSizes[1]==false){
             allSizesDeployed = true;
