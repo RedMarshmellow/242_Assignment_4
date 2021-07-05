@@ -8,4 +8,5 @@ int battle(warrior* , zombie* );
 int rollDice();
 int calcDMG(int, int);
 void playerAttack(char,warrior*,zombie*);
+void printMessage();
 #endif

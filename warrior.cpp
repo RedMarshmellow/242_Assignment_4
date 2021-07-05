@@ -4,7 +4,7 @@
 
 warrior::warrior(char representingChar, int ammo, enum warriorTypes warriorType) : warriorType(warriorType),
                                                                                    entity(1, representingChar, Warrior),
-                                                                                   hitPoints(1), ammo(ammo), score(0),
+                                                                                   hitPoints(100), ammo(ammo), score(0),
                                                                                    alive(true) {
     setLocation(-1, -1, 0);
 }
@@ -139,12 +139,13 @@ int derick::melee() const {
 
 void derick::verbosePrint() {
     std::cout << "======================\n"
-                 "Derick \"Deadeye\"Dreams\n"
+                 "Derick \"Deadeye\" Dreams\n"
                  "======================\n";
     std::cout << "HP:\t\t" << getHitPoints() << "\n";
     std::cout << "Ammo:\t" << getAmmo() << "\n";
     std::cout << "Score:\t" << getScore() << "\n";
     if (!getKillList().empty())std::cout << "Derick has killed: " << getKillList() << "\n";
+    std::cout << "===============================\n";
 }
 
 
@@ -197,5 +198,6 @@ void chichonne::verbosePrint() {
     std::cout << "Score:\t" << getScore() << "\n";
     std::cout << "Blade level: " << ((!megaKatana) ? "Level 1 - Regular katana" : "Level 2 - Mega-Katana")<<"\n";
     if (!getKillList().empty()) std::cout << "Chichonne has killed: " << getKillList() << "\n";
+    std::cout << "===============================\n";
 }
 
